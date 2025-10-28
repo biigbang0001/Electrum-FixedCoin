@@ -3,7 +3,7 @@
 # ElectrumX Installation Script for FixedCoin
 # Using KomodoPlatform/electrumx-1 version
 # Ubuntu 22.04 / Debian 11-12
-# Version: 1.0.6 - With Installation Detection & Management
+# Version: 1.0.7 - KomodoPlatform Path Fix
 ################################################################################
 
 set -e
@@ -37,7 +37,7 @@ print_header() {
     echo "║      ElectrumX Installation for FixedCoin                   ║"
     echo "║      Using KomodoPlatform/electrumx-1                       ║"
     echo "║      Ubuntu 22.04 / Debian 11-12                            ║"
-    echo "║      Version 1.0.6 - Installation Detection & Management    ║"
+    echo "║      Version 1.0.7 - KomodoPlatform Path Fix                ║"
     echo "║                                                              ║"
     echo "╚══════════════════════════════════════════════════════════════╝"
     echo ""
@@ -705,11 +705,18 @@ HOOK
 add_fixedcoin_to_coins() {
     print_status "Adding FixedCoin class to coins.py..."
     
-    # Version 1.16.0 uses old path
-    local coins_file="/home/$ELECTRUMX_USER/electrumx-source/electrumx/lib/coins.py"
+    # KomodoPlatform version uses src/ directory
+    local coins_file="/home/$ELECTRUMX_USER/electrumx-source/src/electrumx/lib/coins.py"
+    
+    # Fallback to old path if new one doesn't exist (compatibility)
+    if [[ ! -f "$coins_file" ]]; then
+        coins_file="/home/$ELECTRUMX_USER/electrumx-source/electrumx/lib/coins.py"
+    fi
     
     if [[ ! -f "$coins_file" ]]; then
-        print_error "File coins.py not found at $coins_file"
+        print_error "File coins.py not found at either:"
+        print_error "  - /home/$ELECTRUMX_USER/electrumx-source/src/electrumx/lib/coins.py"
+        print_error "  - /home/$ELECTRUMX_USER/electrumx-source/electrumx/lib/coins.py"
         exit 1
     fi
     
