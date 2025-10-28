@@ -323,25 +323,6 @@ sudo ./install_electrumx_fixedcoin.sh
 
 ---
 
-## 📝 Changelog
-
-### Version 1.0.8 (2025-10-28)
-- ✅ Fix: "working directory" error after uninstallation
-- ✅ Fix: All confirmations now require pressing Enter
-- ✅ Fix: coins.py path corrected for KomodoPlatform
-
-### Version 1.0.7 (2025-10-28)
-- ✅ Fix: Python path for KomodoPlatform/electrumx-1
-
-### Version 1.0.6 (2025-10-28)
-- ✅ Automatic detection of existing installations
-- ✅ Interactive menu with 4 options
-
-### Version 1.0.5 (2025-10-28)
-- ✅ Migration to KomodoPlatform/electrumx-1
-
----
-
 ## 📜 License
 
 MIT License
