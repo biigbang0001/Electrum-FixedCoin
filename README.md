@@ -83,14 +83,9 @@ You should see:
 ### Quick Install (3 Steps)
 
 ```bash
-# 1. Download
-git clone https://github.com/yourusername/electrumx-fixedcoin.git
+wget https://raw.githubusercontent.com/biigbang0001/electrumx-fixedcoin/main/install_electrumx_fixedcoin.sh
 cd electrumx-fixedcoin
-
-# 2. Make executable
-chmod +x *.sh
-
-# 3. Install
+chmod +x install_electrumx_fixedcoin.sh
 sudo ./install_electrumx_fixedcoin.sh
 ```
 
