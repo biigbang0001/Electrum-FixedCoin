@@ -3,7 +3,7 @@
 # ElectrumX Installation Script for FixedCoin
 # Using KomodoPlatform/electrumx-1 version
 # Ubuntu 22.04 / Debian 11-12
-# Version: 1.0.7 - KomodoPlatform Path Fix
+# Version: 1.0.8 - Working Directory & Confirmation Fix
 ################################################################################
 
 set -e
@@ -37,7 +37,7 @@ print_header() {
     echo "║      ElectrumX Installation for FixedCoin                   ║"
     echo "║      Using KomodoPlatform/electrumx-1                       ║"
     echo "║      Ubuntu 22.04 / Debian 11-12                            ║"
-    echo "║      Version 1.0.7 - KomodoPlatform Path Fix                ║"
+    echo "║      Version 1.0.8 - Working Directory & Confirm Fix        ║"
     echo "║                                                              ║"
     echo "╚══════════════════════════════════════════════════════════════╝"
     echo ""
@@ -82,8 +82,7 @@ check_system() {
     else
         print_warning "This script is designed for Ubuntu 22.04 or Debian 11/12"
         print_warning "Your system: $ID $VERSION_ID"
-        read -p "Do you want to continue anyway? (y/N) " -n 1 -r
-        echo
+        read -p "Do you want to continue anyway? (y/N) " -r
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
             exit 1
         fi
@@ -167,6 +166,9 @@ detect_existing_installation() {
             
             local current_branch=$(sudo -u $ELECTRUMX_USER git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
             echo "  Branch: $current_branch"
+            
+            # Return to a safe directory
+            cd /root
         fi
     fi
     
@@ -222,6 +224,13 @@ detect_existing_installation() {
     echo ""
     
     read -p "Your choice [1/2/3/4]: " choice
+    
+    # Confirmation required - press Enter
+    if [[ -z "$choice" ]]; then
+        print_error "No choice made. Exiting."
+        exit 1
+    fi
+    
     echo ""
     
     case $choice in
@@ -293,6 +302,9 @@ detect_existing_installation() {
 remove_existing_installation() {
     print_status "Removing existing ElectrumX installation..."
     echo ""
+    
+    # CRITICAL: Change to root directory to avoid "current working directory" errors
+    cd /root
     
     # Stop service
     if systemctl is-active --quiet electrumx; then
@@ -426,8 +438,7 @@ get_fixedcoin_config() {
     echo "RPC Port: $FIXEDCOIN_RPC_PORT"
     echo ""
     
-    read -p "Is this configuration correct? (y/N) " -n 1 -r
-    echo ""
+    read -p "Is this configuration correct? (y/N) " -r
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
         print_error "Configuration cancelled"
         exit 1
@@ -596,8 +607,7 @@ ask_ssl_configuration() {
         echo "  Domain: $SSL_DOMAIN"
         echo "  Email: $SSL_EMAIL"
         echo ""
-        read -p "Is this information correct? (y/N) " -n 1 -r
-        echo ""
+        read -p "Is this information correct? (y/N) " -r
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
             print_error "SSL configuration cancelled"
             exit 1
