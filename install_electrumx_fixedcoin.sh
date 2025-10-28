@@ -3,7 +3,7 @@
 # ElectrumX Installation Script for FixedCoin
 # Using KomodoPlatform/electrumx-1 version
 # Ubuntu 22.04 / Debian 11-12
-# Version: 1.0.7 - KomodoPlatform Path Fix
+# Version: 1.0.8 - Python Script Path Fix
 ################################################################################
 
 set -e
@@ -37,7 +37,7 @@ print_header() {
     echo "║      ElectrumX Installation for FixedCoin                   ║"
     echo "║      Using KomodoPlatform/electrumx-1                       ║"
     echo "║      Ubuntu 22.04 / Debian 11-12                            ║"
-    echo "║      Version 1.0.7 - KomodoPlatform Path Fix                ║"
+    echo "║      Version 1.0.8 - Python Script Path Fix                 ║"
     echo "║                                                              ║"
     echo "╚══════════════════════════════════════════════════════════════╝"
     echo ""
@@ -734,10 +734,11 @@ add_fixedcoin_to_coins() {
     print_status "Backup created: $backup_file"
     
     # Use Python to add FixedCoin class
-    sudo -u $ELECTRUMX_USER python3 << 'PYTHON_SCRIPT'
+    # Pass the coins_file path to Python
+    sudo -u $ELECTRUMX_USER python3 << PYTHON_SCRIPT
 import re
 
-coins_file = "/home/electrumx/electrumx-source/electrumx/lib/coins.py"
+coins_file = "$coins_file"
 
 # Read file
 with open(coins_file, 'r') as f:
