@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.venv/
+*.conf
+!deploy/electrumx.conf.example
+*.key
+*.pem
+.env*
+db/
+*.log

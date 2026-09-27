@@ -1,0 +1,19 @@
+[Unit]
+Description=FixedCoin ElectrumX
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=electrumx
+Group=electrumx
+WorkingDirectory=/var/electrum
+EnvironmentFile=/var/electrum/electrumx.conf
+ExecStart=/var/electrum/venv/bin/electrumx_server
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=180
+UMask=0077
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,8 @@
+FixedCoin ElectrumX
+
+Core v30: ASERT V2 and a 21,000 FIX maximum activate at block 52,560.
+The maximum is not circulating supply. Historical consensus remains in effect
+before activation; the frozen output from block 628 remains frozen afterward.
+
+https://web.fixedcoin.org/
+help@fixedcoin.org
